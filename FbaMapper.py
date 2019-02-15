@@ -1,0 +1,221 @@
+import sys, os, time
+import xml.etree.ElementTree as ET
+from subprocess import *
+
+ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
+RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
+
+capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce']
+snk_fight = ['kof94', 'kof95', 'kof96', 'kof97', 'kof98', 'kof99', 'rbff1', 'rbff2', 'rbffspec', 'samsho', 'samsho2', 'samsho3', 'samsho4', 'fatfury1', 'fatfury2', 'fatfury3', 'fatfurysp', 'aof', 'aof2' ]
+
+retroarch_key = {}
+user_key = {}
+capcom_map = {}
+snk_map = {}
+default_map = {}
+
+def run_cmd(cmd):
+# runs whatever in the cmd variable
+    p = Popen(cmd, shell=True, stdout=PIPE)
+    output = p.communicate()[0]
+    return output
+
+def load_es_cfg(index):
+    doc = ET.parse(ES_INPUT)
+    root = doc.getroot()
+    #tag = root.find('inputConfig')
+    tags = root.findall('inputConfig')
+    return tags[index-1].attrib['deviceName']
+
+
+def load_retroarch_cfg(dev_name):
+
+    print 'Device Name: ', dev_name, '\n'
+
+    f = open(RETROARCH_CFG + dev_name + '.cfg', 'r')
+    while True:
+        line = f.readline()
+        if not line: 
+            break
+        #line = line.replace('\"','')
+        line = line.replace('\n','')
+        line = line.replace('input_','')
+        line = line.replace('_btn','')
+        line = line.replace('_axis','')
+        words = line.split()
+        retroarch_key[words[0]] = words[2].replace('"','')
+       
+    f.close()
+    #print 'Retroarch Key:', retroarch_key, '\n'
+
+def load_layout():
+
+    print ' -(1)-----  -(2)-----  -(3)----- '
+    print ' | X Y L |  | Y X L |  | L Y X | '
+    print ' | A B R |  | B A R |  | R B A | '
+    print ' ---------  ---------  --------- '
+
+    es_conf = input('\nSelect your joystick layout: ')
+
+    if es_conf != 1 and es_conf != 2 and es_conf != 3:
+        print 'input error!!'
+        sys.exit()
+    else:
+        if es_conf == 1:
+            user_key['1'] = 'x'
+            user_key['2'] = 'y'
+            user_key['3'] = 'l'
+            user_key['4'] = 'a'
+            user_key['5'] = 'b'
+            user_key['6'] = 'r'
+        elif es_conf == 2:
+            user_key['1'] = 'y'
+            user_key['2'] = 'x'
+            user_key['3'] = 'l'
+            user_key['4'] = 'b'
+            user_key['5'] = 'a'
+            user_key['6'] = 'r'
+        elif es_conf == 3:
+            user_key['1'] = 'l'
+            user_key['2'] = 'y'
+            user_key['3'] = 'x'
+            user_key['4'] = 'r'
+            user_key['5'] = 'b'
+            user_key['6'] = 'a'
+
+
+def set_keymap():
+
+    print '\n\n'
+    print ' -(1)--------  -(2)-------- '
+    print ' | LP MP HP |  | LK MK HK | '
+    print ' | LK MK HK |  | LP MP HP | '
+    print ' ------------  ------------ '
+
+    capcom_conf = input('\nSelect a layout for capcom fighting games: ')
+    if capcom_conf != 1 and capcom_conf != 2:
+        print 'input error!!'
+        sys.exit() 
+    else:
+        if capcom_conf == 1:
+            capcom_map['1'] = user_key['1']     # LP
+            capcom_map['9'] = user_key['2']     # MP
+            capcom_map['10'] = user_key['3']    # HP
+            capcom_map['0'] = user_key['4']     # LK
+            capcom_map['8'] = user_key['5']     # MK
+            capcom_map['11'] = user_key['6']    # HK
+        elif capcom_conf == 2:
+            capcom_map['1'] = user_key['4']     # LP
+            capcom_map['9'] = user_key['5']     # MP
+            capcom_map['10'] = user_key['6']    # HP
+            capcom_map['0'] = user_key['1']     # LK
+            capcom_map['8'] = user_key['2']     # MK
+            capcom_map['11'] = user_key['3']    # HK
+
+    print '\n\n'
+    print ' -(1)-----  -(2)-----  -(3)----- '
+    print ' | C D   |  | A B   |  | D     | '
+    print ' | A B   |  | C D   |  | A B C | '
+    print ' ---------  ---------  --------- '
+
+    snk_conf = input('\nSelect a layout for snk fighting games: ')
+    if snk_conf != 1 and snk_conf != 2 and snk_conf != 3:
+        print 'input error!!'
+        sys.exit() 
+
+    else:
+        if snk_conf == 1:
+            snk_map['0'] = user_key['4']    # A
+            snk_map['8'] = user_key['5']    # B
+            snk_map['1'] = user_key['1']    # C
+            snk_map['9'] = user_key['2']    # D
+        elif snk_conf == 2:
+            snk_map['0'] = user_key['1']
+            snk_map['8'] = user_key['2']
+            snk_map['1'] = user_key['4']
+            snk_map['9'] = user_key['5']
+        elif snk_conf == 3:
+            snk_map['0'] = user_key['4']
+            snk_map['8'] = user_key['5']
+            snk_map['1'] = user_key['6']
+            snk_map['9'] = user_key['1']
+
+    print '\n\n'
+    print ' -(1)-----  -(2)-----  -(3)----- '
+    print ' | C D   |  | A B   |  | D     | '
+    print ' | A B   |  | C D   |  | A B C | '
+    print ' ---------  ---------  --------- '
+    
+    default_conf = input('\nSelect a layout for other games: ')
+    print '\n'
+    if default_conf != 1 and default_conf != 2 and default_conf != 3:
+        print 'input error!!'
+        sys.exit() 
+
+    else:
+        if default_conf == 1:
+            default_map['0'] = user_key['4']
+            default_map['8'] = user_key['5']
+            default_map['1'] = user_key['1']
+            default_map['9'] = user_key['2']
+        elif default_conf == 2:
+            default_map['0'] = user_key['1']
+            default_map['8'] = user_key['2']
+            default_map['1'] = user_key['4']
+            default_map['9'] = user_key['5']
+        elif default_conf == 3:
+            default_map['0'] = user_key['4']
+            default_map['8'] = user_key['5']
+            default_map['1'] = user_key['6']
+            default_map['9'] = user_key['1']
+
+
+def update_fba_rmp(index):
+
+    if os.path.isdir('/opt/retropie/configs/fba/FB Alpha') == False:
+        run_cmd('mkdir /opt/retropie/configs/fba/FB\ Alpha')
+    # print default_map
+    buf = ''
+    run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FB\ Alpha/FB\ Alpha.rmp")
+    f = open('/opt/retropie/configs/fba/FB Alpha/FB Alpha.rmp', 'a')
+    for key in default_map:
+        res = 'input_player' + str(index) + '_btn_' + default_map[key] + ' = ' + '\"' + key + '\"'
+        buf += res + '\n'
+    f.write(buf)
+    f.close()
+    for game in capcom_fight:
+        buf = ''
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FB\ Alpha/" + game + ".rmp")
+        f = open('/opt/retropie/configs/fba/FB Alpha/' + game + '.rmp', 'a')
+        for key in capcom_map:
+            res = 'input_player' + str(index) + '_btn_' + capcom_map[key] + ' = ' + '\"' + key + '\"'
+            buf += res + '\n'
+        f.write(buf)
+        f.close()
+    # print snk_map
+    for game in snk_fight:
+        buf = ''
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FB\ Alpha/" + game + ".rmp")
+        f = open('/opt/retropie/configs/fba/FB Alpha/' + game + '.rmp', 'a')
+        for key in snk_map:
+            res = 'input_player' + str(index) + '_btn_' + snk_map[key] + ' = ' + '\"' + key + '\"'
+            buf += res + '\n'
+        f.write(buf)
+        f.close()
+
+
+if __name__ == "__main__":
+
+    index = int(sys.argv[1])
+
+    print '\n***********************'
+    print '** KeyMapper for FBA **'
+    print '***********************\n'
+
+    dev_name = load_es_cfg(index)
+    load_retroarch_cfg(dev_name)
+    load_layout()
+    set_keymap()
+    update_fba_rmp(index)
+
+
