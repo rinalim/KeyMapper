@@ -5,7 +5,7 @@ from subprocess import *
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 
-capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce']
+capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce', 'ssf2']
 snk_fight = ['kof94', 'kof95', 'kof96', 'kof97', 'kof98', 'kof99', 'rbff1', 'rbff2', 'rbffspec', 'samsho', 'samsho2', 'samsho3', 'samsho4', 'fatfury1', 'fatfury2', 'fatfury3', 'fatfurysp', 'aof', 'aof2' ]
 
 retroarch_key = {}
