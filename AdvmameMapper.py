@@ -32,6 +32,7 @@ def run_advj():
 
     print 'Move your joystick lever...'
     run_cmd('stdbuf -oL ' + ADVJ + ' -device_joystick raw > /tmp/advj &')
+    joy_index = ''
     ret_axis = ''
     while ret_axis == '':
         f = open('/tmp/advj', 'r')
@@ -41,6 +42,8 @@ def run_advj():
                 break
             if '65536' in line:
                 words = line.split(',')
+                joy_index = words[0]
+                print 'Index: ', joy_index
                 axises = words[2].replace(' ','').split(']')
                 #print axises
                 for axis in axises:
