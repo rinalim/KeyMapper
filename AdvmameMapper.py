@@ -71,7 +71,7 @@ def run_advj():
             words = words[0].split("\'")
             fw = open('/tmp/' + words[3] + '.advj', 'w')
             if line[:len(joy_index)] == joy_index:
-                print 'DevName: ' + words[0]
+                print 'DevName: ' + words[3]
         if line == '\n':
             fw.close()
             break
