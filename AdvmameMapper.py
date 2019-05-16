@@ -71,14 +71,14 @@ def run_advj():
             #words = words[0].split(" ")
             fw = open('/tmp/' + words[3].replace("'","") + '.advj', 'w')
             if line[:len(joy_index)] == joy_index:
-                print 'DevName: ' + words[3].replace("'","")
+                dev_name = words[3].replace("'","")
         if line == '\n':
             fw.close()
             break
         fw.write(line)
     fr.close()    
 
-    return ret_axis
+    return dev_name
 
 
 def load_es_cfg(index):
@@ -384,8 +384,8 @@ if __name__ == "__main__":
     print '** KeyMapper for Advmame **'
     print '****************************\n'
 
-    run_advj()
-    dev_name = load_es_cfg(index)
+    dev_name = run_advj()
+    #dev_name = load_es_cfg(index)
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
