@@ -43,7 +43,6 @@ def run_advj():
             if '65536' in line:
                 words = line.split(',')
                 joy_index = words[0]
-                print 'Index: ', joy_index
                 axises = words[2].replace(' ','').split(']')
                 #print axises
                 for axis in axises:
@@ -62,6 +61,7 @@ def run_advj():
 
     fr = open('/tmp/advj', 'r')
     line = fr.readline() # skip the 1st line
+    dev_name = ''
     while True:
         line = fr.readline()
         if not line: 
@@ -70,6 +70,8 @@ def run_advj():
             words = line.split(',')
             words = words[0].split("\'")
             fw = open('/tmp/' + words[3] + '.advj', 'w')
+            if line[:len(joy_index)] == joy_index:
+                print 'DevName: ' + words[0]
         if line == '\n':
             fw.close()
             break
