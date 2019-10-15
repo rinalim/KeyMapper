@@ -25,7 +25,14 @@ def load_es_cfg(index):
     root = doc.getroot()
     #tag = root.find('inputConfig')
     tags = root.findall('inputConfig')
-    return tags[index-1].attrib['deviceName']
+    num = 1
+    for i in tags:
+        print str(num) + ". " + i.attrib['deviceName']
+        num = num+1
+    dev_select = input('\nSelect a layout for capcom fighting games: ')
+
+    return tags[dev_select-1].attrib['deviceName']
+
 
 
 def load_retroarch_cfg(dev_name):
