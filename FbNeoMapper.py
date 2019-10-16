@@ -184,7 +184,7 @@ def update_fba_rmp(index):
     # print default_map
     buf = ''
     run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn \Neo/FinalBurn \Neo.rmp")
-    f = open('/opt/retropie/configs/fba/FB Alpha/FinalBurn Neo.rmp', 'a')
+    f = open('/opt/retropie/configs/fba/FinalBurn Neo/FinalBurn Neo.rmp', 'a')
     for key in default_map:
         res = 'input_player' + str(index) + '_btn_' + default_map[key] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
