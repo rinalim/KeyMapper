@@ -180,7 +180,7 @@ def set_keymap():
 def update_fba_rmp(index):
 
     if os.path.isdir('/opt/retropie/configs/fba/FinalBurn Neo') == False:
-        run_cmd('mkdir "/opt/retropie/configs/fba/FinalBurn Neo")
+        run_cmd('mkdir "/opt/retropie/configs/fba/FinalBurn Neo"')
     # print default_map
     buf = ''
     run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn \Neo/FinalBurn \Neo.rmp")
