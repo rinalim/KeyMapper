@@ -20,6 +20,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
+
 def load_es_cfg():
     doc = ET.parse(ES_INPUT)
     root = doc.getroot()
@@ -32,7 +33,6 @@ def load_es_cfg():
     dev_select = input('\nSelect a layout for capcom fighting games: ')
 
     return tags[dev_select-1].attrib['deviceName']
-
 
 
 def load_retroarch_cfg(dev_name):
@@ -55,6 +55,7 @@ def load_retroarch_cfg(dev_name):
     f.close()
     #print 'Retroarch Key:', retroarch_key, '\n'
 
+    
 def load_layout():
 
     print ' -(1)-----  -(2)-----  -(3)----- '
