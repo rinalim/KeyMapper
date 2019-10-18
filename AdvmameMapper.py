@@ -24,7 +24,7 @@ def run_cmd(cmd):
     return output
 
 
-def run_advj():
+def run_advj(dev_name):
     #run_cmd('stdbuf -oL ' + ADVJ + ' -device_joystick raw > /tmp/advj &')
     #time.sleep(1)
     #run_cmd('killall -9 advj')
@@ -34,7 +34,8 @@ def run_advj():
     joy_index = ''
     ret_axis = ''
     while ret_axis == '':
-        f = open('/tmp/advj', 'r')
+#        f = open('/tmp/advj', 'r')
+        f = open('/tmp/' + dev_name + 'advj', 'r')
         while ret_axis == '':
             line = f.readline()
             if not line: 
@@ -57,7 +58,7 @@ def run_advj():
     advmame_key['axis'] = ret_axis
     run_cmd('killall -9 advj')
     f.close()
-
+'''
     fr = open('/tmp/advj', 'r')
     line = fr.readline() # skip the 1st line
     dev_name = ''
@@ -78,7 +79,7 @@ def run_advj():
     fr.close()    
 
     return dev_name
-
+''''
 
 def load_es_cfg():
     doc = ET.parse(ES_INPUT)
@@ -390,8 +391,8 @@ if __name__ == "__main__":
     print '** KeyMapper for Advmame **'
     print '****************************\n'
 
-    run_advj()
     dev_name = load_es_cfg()
+    run_advj(dev_name)
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
