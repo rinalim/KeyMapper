@@ -3,10 +3,8 @@ import xml.etree.ElementTree as ET
 from subprocess import *
 
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
-#ES_INPUT = './es_input.cfg'
 RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 ADVMAME_RC = '/opt/retropie/configs/mame-advmame/advmame.rc'
-#ADVMAME_RC = './advmame.rc'
 ADVJ = '/opt/retropie/emulators/advmame/bin/advj'
 
 capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce']
@@ -24,6 +22,7 @@ def run_cmd(cmd):
     p = Popen(cmd, shell=True, stdout=PIPE)
     output = p.communicate()[0]
     return output
+
 
 def run_advj():
     #run_cmd('stdbuf -oL ' + ADVJ + ' -device_joystick raw > /tmp/advj &')
@@ -81,12 +80,18 @@ def run_advj():
     return dev_name
 
 
-def load_es_cfg(index):
+def load_es_cfg():
     doc = ET.parse(ES_INPUT)
     root = doc.getroot()
     #tag = root.find('inputConfig')
     tags = root.findall('inputConfig')
-    return tags[index-1].attrib['deviceName']
+    num = 1
+    for i in tags:
+        print str(num) + ". " + i.attrib['deviceName']
+        num = num+1
+    dev_select = input('\nSelect a layout for capcom fighting games: ')
+
+    return tags[dev_select-1].attrib['deviceName']
 
 
 def load_retroarch_cfg(dev_name):
@@ -125,6 +130,7 @@ def load_retroarch_cfg(dev_name):
     f.close()
     #print 'Advmame Key:', advmame_key, '\n'
 
+    
 def get_advmame_key():
 
     run_cmd('stdbuf -oL ' + ADVJ + ' > /tmp/advj &')
@@ -384,8 +390,8 @@ if __name__ == "__main__":
     print '** KeyMapper for Advmame **'
     print '****************************\n'
 
-    dev_name = run_advj()
-    #dev_name = load_es_cfg(index)
+    #dev_name = run_advj()
+    dev_name = load_es_cfg(index)
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
