@@ -30,12 +30,12 @@ def run_advj(dev_name):
     #run_cmd('killall -9 advj')
 
     print 'Move your joystick lever...'
-    run_cmd('stdbuf -oL ' + ADVJ + ' -device_joystick raw > /tmp/advj &')
+    run_cmd('stdbuf -oL ' + ADVJ + ' -device_joystick raw > /tmp/'+dev_name+'.advj &')
     joy_index = ''
     ret_axis = ''
     while ret_axis == '':
 #        f = open('/tmp/advj', 'r')
-        f = open('/tmp/' + dev_name + 'advj', 'r')
+        f = open('/tmp/'+dev_name+'.advj', 'r')
         while ret_axis == '':
             line = f.readline()
             if not line: 
