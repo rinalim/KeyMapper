@@ -79,7 +79,7 @@ def run_advj(dev_name):
     fr.close()    
 
     return dev_name
-''''
+'''
 
 def load_es_cfg():
     doc = ET.parse(ES_INPUT)
