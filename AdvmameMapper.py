@@ -46,7 +46,7 @@ def run_advj():
                 #print axises
                 for axis in axises:
                     if '65536' in axis:
-                        print 'Axis ' + axis[0] + ' detected!'
+                        print 'Axis ' + axis[0] + ' detected!\n'
                         ret_axis = axis[0]
                         break
                 #words = line.split()
