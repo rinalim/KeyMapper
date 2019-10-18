@@ -210,8 +210,8 @@ def update_fba_rmp(index):
         f.write(buf)
         f.close()
 
-    if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
-        run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
+    # if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
+    #    run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
 
 if __name__ == "__main__":
 
