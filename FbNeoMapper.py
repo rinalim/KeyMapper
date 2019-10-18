@@ -20,7 +20,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
-def load_es_cfg(index):
+def load_es_cfg():
     doc = ET.parse(ES_INPUT)
     root = doc.getroot()
     #tag = root.find('inputConfig')
@@ -221,7 +221,7 @@ if __name__ == "__main__":
     print '** KeyMapper for FBNeo **'
     print '***********************\n'
 
-    dev_name = load_es_cfg(index)
+    dev_name = load_es_cfg()
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
