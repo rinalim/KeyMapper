@@ -391,7 +391,7 @@ if __name__ == "__main__":
     print '****************************\n'
 
     #dev_name = run_advj()
-    dev_name = load_es_cfg(index)
+    dev_name = load_es_cfg()
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
