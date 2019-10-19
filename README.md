@@ -1,2 +1,2 @@
 # KeyMapper
-Auto Key Mapper for AdvMame and FBA
+Auto Key Mapper for AdvMame and FinalBurn
