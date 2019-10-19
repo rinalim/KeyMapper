@@ -392,8 +392,8 @@ if __name__ == "__main__":
     print '** KeyMapper for Advmame **'
     print '****************************\n'
 
-    dev_name = load_es_cfg()
-    run_advj()
+    load_es_cfg()
+    dev_name = run_advj()
     load_retroarch_cfg(dev_name)
     load_layout()
     set_keymap()
