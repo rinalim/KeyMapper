@@ -5,8 +5,24 @@ from subprocess import *
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 
-capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce', 'ssf2']
-snk_fight = ['kof94', 'kof95', 'kof96', 'kof97', 'kof98', 'kof99', 'rbff1', 'rbff2', 'rbffspec', 'samsho', 'samsho2', 'samsho3', 'samsho4', 'fatfury1', 'fatfury2', 'fatfury3', 'fatfurysp', 'aof', 'aof2' ]
+capcom_fight = [
+    'mshvsf', 'vsav', 
+    'sfa', 'sfa2', 'sfa3', 
+    'sf2', 'sf2ce', 'ssf2',
+    'sfiii', 'sfiii3'
+    ]
+snk_fight = [
+    'kof94', 'kof95', 'kof96', 'kof97', 'kof98', 'kof99', 
+    'rbff1', 'rbff2', 'rbffspec', 
+    'samsho', 'samsho2', 'samsho3', 'samsho4', 
+    'fatfury1', 'fatfury2', 'fatfury3', 'fatfurysp',
+    'aof', 'aof2' 
+    ]
+shoot = [
+    '1941', '1942', '1943', '1944',
+    'gunbird', 'gunbird2',
+    'mazinger'
+    ]
 
 retroarch_key = {}
 user_key = {}
@@ -93,6 +109,8 @@ def load_layout():
 
 def set_keymap():
 
+    global turbo_key
+
     print '\n\n'
     print ' -(1)--------  -(2)-------- '
     print ' | LP MP HP |  | LK MK HK | '
@@ -147,6 +165,34 @@ def set_keymap():
             snk_map['1'] = user_key['6']
             snk_map['9'] = user_key['1']
 
+    print '\n\n'
+    print ' -(1)-----  -(2)-----  -(3)------ '
+    print ' | B  C  |  | A  A* |  | A* B C | '
+    print ' | A  A* |  | B  C  |  | A  B C | '
+    print ' ---------  ---------  ---------- '
+
+    shoot_conf = input('\nSelect a layout for shooting games (* = Turbo): ')
+    if shoot_conf != 1 and shoot_conf != 2 and shoot_conf != 3:
+        print 'input error!!'
+        sys.exit() 
+
+    else:
+        if shoot_conf == 1:
+            shoot_map['0'] = user_key['4'] + user_key['5']   # A
+            shoot_map['8'] = user_key['1']    # B
+            shoot_map['1'] = user_key['2']    # C
+            turbo_key = retroarch_key[user_key['5']]
+        elif shoot_conf == 2:
+            shoot_map['0'] = user_key['1'] + user_key['2'] 
+            shoot_map['8'] = user_key['4']
+            shoot_map['1'] = user_key['5']
+            turbo_key = retroarch_key[user_key['2']]
+        elif shoot_conf == 3:
+            shoot_map['0'] = user_key['4'] + user_key['1'] 
+            shoot_map['8'] = user_key['5'] + user_key['2'] 
+            shoot_map['1'] = user_key['6'] + user_key['3']
+            turbo_key = retroarch_key[user_key['1']]
+            
     print '\n\n'
     print ' -(1)-----  -(2)-----  -(3)----- '
     print ' | C D   |  | A B   |  | D     | '
@@ -209,7 +255,21 @@ def update_fba_rmp(index):
             buf += res + '\n'
         f.write(buf)
         f.close()
-
+    # print shoot_map
+    for game in shoot:
+        buf = ''
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FB\ Alpha/" + game + ".rmp")
+        f = open('/opt/retropie/configs/fba/FB\ Alpha/' + game + '.rmp', 'a')
+        for key in shoot_map:
+            res = 'input_player' + str(index) + '_btn_' + shoot_map[key][0] + ' = ' + '\"' + key + '\"'
+            buf += res + '\n'
+            if len(shoot_map[key]) == 2:
+                res = 'input_player' + str(index) + '_btn_' + shoot_map[key][1] + ' = ' + '\"' + key + '\"'
+                buf += res + '\n'
+        f.write(buf)
+        f.close()
+        run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
+        run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
 
 if __name__ == "__main__":
 
