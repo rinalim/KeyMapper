@@ -28,6 +28,7 @@ retroarch_key = {}
 user_key = {}
 capcom_map = {}
 snk_map = {}
+shoot_map = {}
 default_map = {}
 
 def run_cmd(cmd):
@@ -165,6 +166,31 @@ def set_keymap():
             snk_map['9'] = user_key['1']
 
     print '\n\n'
+    print ' -(1)-----  -(2)-----  -(3)------ '
+    print ' | B  C  |  | A  A* |  | A* B C | '
+    print ' | A  A* |  | B  C  |  | A  B C | '
+    print ' ---------  ---------  ---------- '
+
+    shoot_conf = input('\nSelect a layout for shooting games (* = Turbo): ')
+    if shoot_conf != 1 and shoot_conf != 2 and shoot_conf != 3:
+        print 'input error!!'
+        sys.exit() 
+
+    else:
+        if shoot_conf == 1:
+            shoot_map['0'] = user_key['4'] + user_key['5']   # A
+            shoot_map['8'] = user_key['1']    # B
+            shoot_map['1'] = user_key['2']    # C
+        elif shoot_conf == 2:
+            shoot_map['0'] = user_key['1'] + user_key['2'] 
+            shoot_map['8'] = user_key['4']
+            shoot_map['1'] = user_key['5']
+        elif shoot_conf == 3:
+            shoot_map['0'] = user_key['4'] + user_key['1'] 
+            shoot_map['8'] = user_key['5'] + user_key['2'] 
+            shoot_map['1'] = user_key['6'] + user_key['3'] 
+            
+    print '\n\n'
     print ' -(1)-----  -(2)-----  -(3)----- '
     print ' | C D   |  | A B   |  | D     | '
     print ' | A B   |  | C D   |  | A B C | '
@@ -224,6 +250,19 @@ def update_fba_rmp(index):
         for key in snk_map:
             res = 'input_player' + str(index) + '_btn_' + snk_map[key] + ' = ' + '\"' + key + '\"'
             buf += res + '\n'
+        f.write(buf)
+        f.close()
+    # print shoot_map
+    for game in shoot:
+        buf = ''
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/" + game + ".rmp")
+        f = open('/opt/retropie/configs/fba/FinalBurn Neo/' + game + '.rmp', 'a')
+        for key in shoot_map:
+            res = 'input_player' + str(index) + '_btn_' + shoot_map[key][0] + ' = ' + '\"' + key + '\"'
+            buf += res + '\n'
+            if len(shoot_map[key]) == 2:
+                res = 'input_player' + str(index) + '_btn_' + shoot_map[key][1] + ' = ' + '\"' + key + '\"'
+                buf += res + '\n'
         f.write(buf)
         f.close()
 
