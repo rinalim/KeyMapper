@@ -269,7 +269,7 @@ def update_fba_rmp(index):
         f.write(buf)
         f.close()
         run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
-        run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + ' >> /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
+        run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
     # if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
     #    run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
 
