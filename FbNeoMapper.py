@@ -181,6 +181,7 @@ def set_keymap():
             shoot_map['0'] = user_key['4'] + user_key['5']   # A
             shoot_map['8'] = user_key['1']    # B
             shoot_map['1'] = user_key['2']    # C
+            print "turbo key =" + retroarch_key[user_key['5']]
         elif shoot_conf == 2:
             shoot_map['0'] = user_key['1'] + user_key['2'] 
             shoot_map['8'] = user_key['4']
