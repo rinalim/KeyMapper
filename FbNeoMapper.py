@@ -21,7 +21,8 @@ snk_fight = [
 shoot = [
     '1941', '1942', '1943', '1944',
     'gunbird', 'gunbird2',
-    'mazinger'
+    'mazinger',
+    'tengai'
     ]
 
 retroarch_key = {}
