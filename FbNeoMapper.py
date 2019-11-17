@@ -111,6 +111,8 @@ def load_layout():
 
 
 def set_keymap():
+    
+    global turbo_key
 
     print '\n\n'
     print ' -(1)--------  -(2)-------- '
