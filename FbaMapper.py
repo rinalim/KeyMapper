@@ -47,7 +47,7 @@ def load_es_cfg():
     for i in tags:
         print str(num) + ". " + i.attrib['deviceName']
         num = num+1
-    dev_select = input('\nSelect a layout for capcom fighting games: ')
+    dev_select = input('\nSelect your joystick: ')
 
     return tags[dev_select-1].attrib['deviceName']
 
