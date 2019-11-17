@@ -280,9 +280,9 @@ if __name__ == "__main__":
 
     index = int(sys.argv[1])
 
-    print '\n***********************'
+    print '\n*************************'
     print '** KeyMapper for FBNeo **'
-    print '***********************\n'
+    print '*************************\n'
 
     dev_name = load_es_cfg()
     load_retroarch_cfg(dev_name)
