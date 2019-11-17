@@ -181,17 +181,17 @@ def set_keymap():
             shoot_map['0'] = user_key['4'] + user_key['5']   # A
             shoot_map['8'] = user_key['1']    # B
             shoot_map['1'] = user_key['2']    # C
-            turbo key = retroarch_key[user_key['5']]
+            turbo_key = retroarch_key[user_key['5']]
         elif shoot_conf == 2:
             shoot_map['0'] = user_key['1'] + user_key['2'] 
             shoot_map['8'] = user_key['4']
             shoot_map['1'] = user_key['5']
-            turbo key = retroarch_key[user_key['2']]
+            turbo_key = retroarch_key[user_key['2']]
         elif shoot_conf == 3:
             shoot_map['0'] = user_key['4'] + user_key['1'] 
             shoot_map['8'] = user_key['5'] + user_key['2'] 
             shoot_map['1'] = user_key['6'] + user_key['3']
-            turbo key = retroarch_key[user_key['1']]
+            turbo_key = retroarch_key[user_key['1']]
          
     print '\n\n'
     print ' -(1)-----  -(2)-----  -(3)----- '
@@ -269,7 +269,7 @@ def update_fba_rmp(index):
         f.write(buf)
         f.close()
         run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
-        run_cmd("echo 'input_player" + str(index) + "_turbo_btn/' >> /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
+        run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + ' >> /home/pi/RetroPie/roms/fba/" + game + ".zip.cfg")
     # if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
     #    run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
 
