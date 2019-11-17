@@ -261,7 +261,7 @@ def update_fba_rmp(index):
     for game in shoot:
         buf = ''
         run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FB\ Alpha/" + game + ".rmp")
-        f = open('/opt/retropie/configs/fba/FB\ Alpha/' + game + '.rmp', 'a')
+        f = open('/opt/retropie/configs/fba/FB Alpha/' + game + '.rmp', 'a')
         for key in shoot_map:
             res = 'input_player' + str(index) + '_btn_' + shoot_map[key][0] + ' = ' + '\"' + key + '\"'
             buf += res + '\n'
