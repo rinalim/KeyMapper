@@ -8,7 +8,8 @@ RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 capcom_fight = [
     'mshvsf', 'vsav', 
     'sfa', 'sfa2', 'sfa3', 
-    'sf2', 'sf2ce', 'ssf2'
+    'sf2', 'sf2ce', 'ssf2',
+    'sfiii', 'sfiii3'
     ]
 snk_fight = [
     'kof94', 'kof95', 'kof96', 'kof97', 'kof98', 'kof99', 
@@ -16,6 +17,11 @@ snk_fight = [
     'samsho', 'samsho2', 'samsho3', 'samsho4', 
     'fatfury1', 'fatfury2', 'fatfury3', 'fatfurysp',
     'aof', 'aof2' 
+    ]
+shoot = [
+    '1941', '1942', '1943', '1944',
+    'gunbird', 'gunbird2',
+    'mazinger'
     ]
 
 retroarch_key = {}
