@@ -30,6 +30,7 @@ capcom_map = {}
 snk_map = {}
 shoot_map = {}
 default_map = {}
+turbo_key = ''
 
 def run_cmd(cmd):
 # runs whatever in the cmd variable
