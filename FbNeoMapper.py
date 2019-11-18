@@ -175,7 +175,7 @@ def set_keymap():
     print ' | A  A* |  | B  C  |  | A  B C | '
     print ' ---------  ---------  ---------- '
 
-    shoot_conf = input('\nSelect a layout for shooting games (* = Turbo): ')
+    shoot_conf = input('\nSelect a layout for shooting games (* Turbo): ')
     if shoot_conf != 1 and shoot_conf != 2 and shoot_conf != 3:
         print 'input error!!'
         sys.exit() 
