@@ -275,7 +275,7 @@ def update_fba_rmp(index):
         if os.path.isfile(FBA_ROMPATH + game + ".zip.cfg") == True:
             run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' " + FBA_ROMPATH + game + ".zip.cfg")
         if turbo_key != '':
-            run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " FBA_ROMPATH + game + ".zip.cfg")
+            run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " + FBA_ROMPATH + game + ".zip.cfg")
 
 if __name__ == "__main__":
 
