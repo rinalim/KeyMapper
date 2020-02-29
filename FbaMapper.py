@@ -40,6 +40,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
+	
 def load_es_cfg():
     doc = ET.parse(ES_INPUT)
     root = doc.getroot()
@@ -52,7 +53,6 @@ def load_es_cfg():
     dev_select = input('\nSelect your joystick: ')
 
     return tags[dev_select-1].attrib['deviceName']
-
 
 
 def load_retroarch_cfg(dev_name):
@@ -75,6 +75,7 @@ def load_retroarch_cfg(dev_name):
     f.close()
     #print 'Retroarch Key:', retroarch_key, '\n'
 
+	
 def load_layout():
 
     print ' -(1)-----  -(2)-----  -(3)----- '
@@ -276,6 +277,8 @@ def update_fba_rmp(index):
             run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' " + FBA_ROMPATH + game + ".zip.cfg")
         if turbo_key != '':
             run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " + FBA_ROMPATH + game + ".zip.cfg")
+    if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
+        run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
 
 if __name__ == "__main__":
 
@@ -290,5 +293,3 @@ if __name__ == "__main__":
     load_layout()
     set_keymap()
     update_fba_rmp(index)
-
-

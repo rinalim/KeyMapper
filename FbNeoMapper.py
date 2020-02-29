@@ -277,8 +277,8 @@ def update_fba_rmp(index):
             run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' " + FBA_ROMPATH + game + ".zip.cfg")
         if turbo_key != '':
             run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " + FBA_ROMPATH + game + ".zip.cfg")
-    # if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
-    #    run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
+    if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
+        run_cmd('cp -r /opt/retropie/configs/fba/FinalBurn\ Neo /home/pi/.config/retroarch/config/remaps')
 
 if __name__ == "__main__":
 
@@ -293,4 +293,3 @@ if __name__ == "__main__":
     load_layout()
     set_keymap()
     update_fba_rmp(index)
-
