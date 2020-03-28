@@ -247,8 +247,8 @@ def update_fba_rmp(index):
         run_cmd('mkdir ' + OPT + '/configs/fba/' + sys_map[system].replace(" ","\ "))
     # print default_map
     buf = ''
-    run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + sys_map[system].replace(" ","\ ") + ".rmp")
-    f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + +sys_map[system].replace(" ","\ ") + '.rmp', 'a')
+    run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/' + sys_map[system].replace(" ","\ ") + ".rmp")
+    f = open(OPT + '/configs/fba/'+ sys_map[system] + '/' + sys_map[system].replace(" ","\ ") + '.rmp', 'a')
     for key in default_map:
         res = 'input_player' + str(index) + '_btn_' + default_map[key] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
