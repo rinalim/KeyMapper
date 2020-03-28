@@ -2,9 +2,16 @@ import sys, os, time
 import xml.etree.ElementTree as ET
 from subprocess import *
 
-ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
-RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
-FBA_ROMPATH = '/home/pi/RetroPie/roms/fba/'
+if os.path.isdir('/opt/retropie') == True:
+    OPT = '/opt/retropie'
+elif os.path.isdir('/opt/retroarena') == True:
+    OPT = '/opt/retroarena'
+ES_INPUT = OPT + '/configs/all/emulationstation/es_input.cfg'
+RETROARCH_CFG = OPT + '/configs/all/retroarch-joypads/'
+if os.path.isdir('/home/pi/RetroPie') == True:
+    FBA_ROMPATH = '/home/pi/RetroPie/roms/fba/'
+elif os.path.isdir('/home/pigaming/RetroArena') == True:
+    FBA_ROMPATH = '/home/pigaming/RetroArena/roms/fba/'
 
 capcom_fight = [
     'mshvsf', 'vsav', 
@@ -230,12 +237,18 @@ def set_keymap():
 
 def update_fba_rmp(index):
 
-    if os.path.isdir('/opt/retropie/configs/fba/FinalBurn Neo') == False:
-        run_cmd('mkdir /opt/retropie/configs/fba/FinalBurn\ Neo')
+    sys_map = {
+    "lr-fbneo": "FinalBurn Neo",
+    "lr-fbalpha": "FB Alpha"
+    }
+    system = "lr-fbneo"
+
+    if os.path.isdir(OPT + '/configs/fba/'+sys_map[system]) == False:
+        run_cmd('mkdir ' + OPT + '/configs/fba/' + sys_map[system].replace(" ","\ "))
     # print default_map
     buf = ''
-    run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/FinalBurn\ Neo.rmp")
-    f = open('/opt/retropie/configs/fba/FinalBurn Neo/FinalBurn Neo.rmp', 'a')
+    run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + sys_map[system].replace(" ","\ ") + ".rmp")
+    f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + +sys_map[system].replace(" ","\ ") + '.rmp', 'a')
     for key in default_map:
         res = 'input_player' + str(index) + '_btn_' + default_map[key] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
@@ -243,8 +256,8 @@ def update_fba_rmp(index):
     f.close()
     for game in capcom_fight:
         buf = ''
-        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/" + game + ".rmp")
-        f = open('/opt/retropie/configs/fba/FinalBurn Neo/' + game + '.rmp', 'a')
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + game + ".rmp")
+        f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + game + '.rmp', 'a')
         for key in capcom_map:
             res = 'input_player' + str(index) + '_btn_' + capcom_map[key] + ' = ' + '\"' + key + '\"'
             buf += res + '\n'
@@ -253,8 +266,8 @@ def update_fba_rmp(index):
     # print snk_map
     for game in snk_fight:
         buf = ''
-        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/" + game + ".rmp")
-        f = open('/opt/retropie/configs/fba/FinalBurn Neo/' + game + '.rmp', 'a')
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + game + ".rmp")
+        f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + game + '.rmp', 'a')
         for key in snk_map:
             res = 'input_player' + str(index) + '_btn_' + snk_map[key] + ' = ' + '\"' + key + '\"'
             buf += res + '\n'
@@ -263,8 +276,8 @@ def update_fba_rmp(index):
     # print shoot_map
     for game in shoot:
         buf = ''
-        run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/" + game + ".rmp")
-        f = open('/opt/retropie/configs/fba/FinalBurn Neo/' + game + '.rmp', 'a')
+        run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + game + ".rmp")
+        f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + game + '.rmp', 'a')
         for key in shoot_map:
             res = 'input_player' + str(index) + '_btn_' + shoot_map[key][0] + ' = ' + '\"' + key + '\"'
             buf += res + '\n'
